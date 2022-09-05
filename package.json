@@ -1,0 +1,28 @@
+{
+  "name": "yuan-hoje-bot",
+  "version": "1.0.0",
+  "description": "A twitter bot that publishes the Chinese Yuan quote",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RhaynerRS/YuanHojeBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RhaynerRS/YuanHojeBot/issues"
+  },
+  "homepage": "https://github.com/RhaynerRS/YuanHojeBot#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
+    "dotenv": "^16.0.2",
+    "twitter-api-v2": "^1.12.5",
+    "twitter-lite": "^1.1.0",
+    "twitter-lite-v2": "^0.14.0"
+  }
+}
