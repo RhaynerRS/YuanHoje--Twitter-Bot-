@@ -12,19 +12,24 @@ const client = new TwitterApi({
 
 let previousQuote = "";
 
+const diferencaCotacao = () => {
+  const resto = previousQuote > res.data.CNYBRL.bid ? previousQuote % res.data.CNYBRL.bid > 0.0005 : res.data.CNYBRL.bid % previousQuote > 0.0005;
+  return resto
+}
+
 (function PostYuanQuoteOnTwitter() {
   Axios.get("https://economia.awesomeapi.com.br/last/CNY-BRL")
     .then((res) => {
       const tweet =
-        previousQuote > parseFloat(res.data.CNYBRL.bid)
+        previousQuote > res.data.CNYBRL.bid
           ? `📊 Yuan caiu 😁 - R$ ${res.data.CNYBRL.bid} às ${dayjs(
-              res.data.CNYBRL.create_date
-            ).format("HH:mm")} 💵`
+            res.data.CNYBRL.create_date
+          ).format("HH:mm")} 💵`
           : `📊 Yuan subiu 😱 - R$ ${res.data.CNYBRL.bid} às ${dayjs(
-              res.data.CNYBRL.create_date
-            ).format("HH:mm")} 💵`;
+            res.data.CNYBRL.create_date
+          ).format("HH:mm")} 💵`;
 
-      if (previousQuote !== parseFloat(res.data.CNYBRL.bid)) {
+      if (diferencaCotacao()) {
         client.v2
           .tweet(tweet)
           .then((val) => {
@@ -33,11 +38,11 @@ let previousQuote = "";
           .catch((err) => {
             console.log(err);
           });
-        previousQuote = parseFloat(res.data.CNYBRL.bid);
+        previousQuote = res.data.CNYBRL.bid;
       }
     })
     .catch((err) => console.error(err));
   setTimeout(function () {
     PostYuanQuoteOnTwitter();
-  }, 30000);
+  }, 2 * 60000);
 })();
